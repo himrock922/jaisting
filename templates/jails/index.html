@@ -1,0 +1,29 @@
+{% extends 'application.html' %}
+
+{% block title %}Jail List{% endblock %}
+{% block content %}
+  {% csrf_token %}
+  <main class="dashboard">
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+      <a href="{% url 'jails:index' %}" class="navbar-brand col-sm-3 col-md-2 mr-0">Jails</a>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="{% url 'logout' %}">log out</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-10">
+          <h2>Jails</h2>
+        </div>
+        <div class="col-sm-2">
+          <h2><a class="btn btn-success new" href="{% url 'jails:new' %}">New</a></div>
+        </h2>
+      </div>
+    </div>
+    <div class="table-responsive" id="app">
+      <jails-index></jails-index>
+    </div>
+  </main>
+{% endblock %}

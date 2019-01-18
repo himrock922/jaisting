@@ -1,0 +1,32 @@
+{% extends 'application.html' %}
+
+{% block title %}Jail Hosting System{% endblock %}
+
+{% block content %}
+  <main class="top">
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">Jail Hosting System</h3>
+        </div>
+      </header>
+      <div role="main" class="inner cover">
+        <h1 class="cover-heading">Jail Hosting System</h1>
+        <p class="lead">
+          This Project is "hosting system" of jail for FreeBSD function.
+        </p>
+        <p class="lead">
+          If you want use, Please sign-in.
+        </p>
+        <p class="lead">
+          <a href="{% url 'login' %}" class="btn btn-lg btn-secondary">サインイン</a>
+        </p>
+      </div>
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+          <p>Copyright (c) <a href="https://twitter.com/himrock922">@himrock922</a>. All Rights Reserved.</p>
+        </div>
+      </footer>
+    </div>
+  </main>
+{% endblock %}

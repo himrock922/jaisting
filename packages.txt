@@ -1,0 +1,9 @@
+Django==2.1.2
+gitdb2==2.0.5
+GitPython==2.1.11
+ioc==0.3.1
+iocage==0.3.1
+pytz==2018.6
+smmap2==2.0.5
+sqlite3==0.0.0
+ucl==0.8

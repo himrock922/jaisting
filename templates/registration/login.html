@@ -1,0 +1,13 @@
+{% extends 'application.html' %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+  <main class="login">
+    <form method="post" class="form-signin">
+      <h1 class="h3 mb-3 font-weight-normal"">ログイン画面</h1>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">ログイン</button>
+    </form>
+  </main>
+{% endblock %}
