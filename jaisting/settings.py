@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'jaisting.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'jail_hosting_development',
-        'USER': 'jail_development',
-        'PASSWORD': 'jail_development',
+        'NAME': 'jaisting_development',
+        'USER': 'jaisting',
+        'PASSWORD': 'jaisting',
         'HOST': 'localhost',
         'PORT': '',
     }
