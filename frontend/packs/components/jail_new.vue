@@ -4,7 +4,7 @@
                   type="text"
                   placeholder="Please Input of jail name"></b-form-input>
     <p>Value: {{ input_name }}</p>
-    <b-form-select v-model="selected" :options="options" class="mb-3"/>
+    <b-form-select v-model="selected" :options="fetched_releases" class="mb-3"/>
     <div>Selected: <strong>{{ selected }}</strong></div>
     <button type="button" class="btn btn-success" @click="jail_create">Create</button>
   </div>
@@ -21,7 +21,7 @@
             return {
                 input_name: '',
                 selected: null,
-                options: []
+                fetched_releases: []
             }
         },
         props: {
@@ -32,7 +32,14 @@
             fetch_releases: function () {
                 axios.get(this.$store.state.serverName + '/jails/fetch_releases', {})
                     .then(response => {
-                        this.options = response.data
+                        let json_response = []
+                        json_response = response.data
+                        let len = response.data.length
+                        for (let i=0; i< len; i++) {
+                            if(json_response[i].fetched) {
+                                this.fetched_releases.push(json_response[i].name)
+                            }
+                        }
                     })
             },
             jail_create: function () {

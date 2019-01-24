@@ -50,7 +50,14 @@ def fetch_jails(request):
 def fetch_releases(request):
     try:
         distribution = ioc.Distribution()
-        response = json.dumps([x.name for x in distribution.releases])
+        releases_json = []
+        for release in distribution.releases:
+            release_dict = OrderedDict([
+                ('name', release.name),
+                ('fetched', ioc.Release(release.name).fetched)
+            ])
+            releases_json.append(release_dict)
+        response = json.dumps(releases_json)
     except (ioc.errors.IocageException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
