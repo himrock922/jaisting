@@ -5,9 +5,9 @@ from collections import OrderedDict
 import json
 import ioc
 
+
 def index(request):
     return render(request, 'jails/index.html')
-
 
 def detail(request, jail_name):
     try:
@@ -16,14 +16,12 @@ def detail(request, jail_name):
         raise Http404('%s does not found' % jail_name)
     return render(request, 'jails/detail.html', {'jail': jail.config})
 
-
 def new(request):
     try:
         distribution = ioc.Distribution()
     except(ioc.errors.IocageException):
         raise Http404('Jails does not found')
     return render(request, 'jails/new.html', {'distribution': distribution.releases})
-
 
 def fetch_jails(request):
     try:
@@ -40,12 +38,11 @@ def fetch_jails(request):
                 ('release', str(jail.release))
             ])
             jails_json.append(jail_dict)
-            count+=1
+            count += 1
         response = json.dumps(jails_json)
     except (ioc.errors.IocageException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
-
 
 def fetch_releases(request):
     try:
@@ -58,6 +55,19 @@ def fetch_releases(request):
             ])
             releases_json.append(release_dict)
         response = json.dumps(releases_json)
+    except (ioc.errors.IocageException):
+        return HttpResponse('API Error', status=500)
+    return HttpResponse(response)
+
+def release_download(request):
+    try:
+        response = json.loads(request.body)
+        if response['release'] is None:
+            return HttpResponse('release was none. Please selection release version', status=500)
+        release = ioc.Release(response['release'])
+        if release.fetched is True:
+            return HttpResponse('%s was already downloaded. Skipping download.' % response['release'], status=409)
+        release.fetch()
     except (ioc.errors.IocageException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)

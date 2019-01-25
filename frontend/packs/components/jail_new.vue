@@ -1,17 +1,26 @@
 <template>
-  <div>
-    <b-form-input v-model="input_name"
-                  type="text"
-                  placeholder="Please Input of jail name"></b-form-input>
-    <p>Value: {{ input_name }}</p>
-    <b-form-select v-model="selected" :options="fetched_releases" class="mb-3"/>
-    <div>Selected: <strong>{{ selected }}</strong></div>
-    <button type="button" class="btn btn-success" @click="jail_create">Create</button>
+  <div v-if="$store.state.loading">
+    <vue-loading type="spin" :size="{ width: '150px', height: '150px' }"></vue-loading>
+  </div>
+  <div v-else-if="!$store.state.loading">
+    <h2>Jail New</h2>
+    <b-form-group label="Create Jail System">
+      <b-form-input v-model="input_name"
+                    type="text"
+                    placeholder="Please Input of jail name"></b-form-input>
+      <p>Value: {{ input_name }}</p>
+      <b-form-select v-model="selected" :options="$store.state.fetched_releases" class="mb-3"/>
+      <div>Selected: <strong>{{ selected }}</strong></div>
+      <button type="button" class="btn btn-success" @click="jail_create">Create</button>
+    </b-form-group>
+    <fetch-release></fetch-release>
   </div>
 </template>
 
 <script>
     import axios from 'axios'
+    import FetchRelease from './fetch_release.vue'
+    import {VueLoading} from 'vue-loading-template'
 
     axios.defaults.xsrfCookieName = 'csrftoken'
     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
@@ -21,27 +30,17 @@
             return {
                 input_name: '',
                 selected: null,
-                fetched_releases: []
             }
+        },
+        components: {
+            'fetch-release': FetchRelease,
+            'vue-loading': VueLoading
         },
         props: {
             jail_name: String,
             release: String
         },
         methods: {
-            fetch_releases: function () {
-                axios.get(this.$store.state.serverName + '/jails/fetch_releases', {})
-                    .then(response => {
-                        let json_response = []
-                        json_response = response.data
-                        let len = response.data.length
-                        for (let i=0; i< len; i++) {
-                            if(json_response[i].fetched) {
-                                this.fetched_releases.push(json_response[i].name)
-                            }
-                        }
-                    })
-            },
             jail_create: function () {
                 axios.post(this.$store.state.serverName + '/jails/create', {
                     jail_name: this.input_name,
@@ -56,11 +55,19 @@
             }
         },
         created: function () {
-            this.fetch_releases()
+            this.$store.dispatch('reload_releases')
         }
     }
 </script>
 
 <style scoped>
-
+  .vue-loading {
+    color: #0DC5C1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -75x;
+    margin-top: -75px;
+    overflow: auto;
+  }
 </style>

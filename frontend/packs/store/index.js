@@ -11,11 +11,18 @@ axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 export const store = new Vuex.Store({
     state: {
         serverName: 'http://localhost',
-        jails: {}
+        jails: {},
+        fetched_releases: [],
+        non_fetch_releases: [],
+        loading: false
     },
     mutations: {
         [types.RELOAD_JAILS](state, jails) {
             state.jails = jails
+        },
+        [types.RELOAD_RELEASES](state, releases_array) {
+            state.fetched_releases = releases_array.fetched_releases
+            state.non_fetch_releases = releases_array.non_fetch_releases
         }
     },
     actions: {
@@ -27,6 +34,24 @@ export const store = new Vuex.Store({
                     jails = response.data
                 });
             context.commit(types.RELOAD_JAILS, jails);
+        },
+        async reload_releases(context) {
+            let fetched_releases = [];
+            let non_fetch_releases = [];
+            await axios.get(this.state.serverName + '/jails/fetch_releases', {})
+                .then(response => {
+                    let json_response = []
+                    json_response = response.data
+                    let len = response.data.length
+                    for (let i = 0; i < len; i++) {
+                        if (json_response[i].fetched) {
+                            fetched_releases.push(json_response[i].name)
+                        } else {
+                            non_fetch_releases.push(json_response[i].name)
+                        }
+                    }
+                });
+            context.commit(types.RELOAD_RELEASES, { fetched_releases: fetched_releases, non_fetch_releases: non_fetch_releases });
         }
     }
 })
