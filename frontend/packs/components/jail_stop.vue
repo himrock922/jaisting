@@ -14,15 +14,17 @@
         },
         methods: {
             jail_stop: function () {
+                this.$store.state.loading = true
                 axios.put(this.$store.state.serverName + '/jails/stop', {
                     jail_name: this.jail_name
                 })
                     .then(response => {
-                        console.log(response)
                         this.$store.dispatch('reload_jails')
+                        this.$store.state.loading = false
                     })
                     .catch(error => {
                         alert(error.response)
+                        this.$store.state.loading = false
                     })
             }
         }

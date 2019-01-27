@@ -24,13 +24,12 @@
         methods: {
             release_download: function () {
                 this.$store.state.loading = true
-                axios.put(this.$store.state.serverName + '/jails/release_download', {
+                axios.post(this.$store.state.serverName + '/jails/release_download', {
                     release: this.fetching_release_selected
                 })
                     .then(response => {
-                        console.log(response)
-                        this.$store.state.loading = false
                         this.$store.dispatch('reload_releases')
+                        this.$store.state.loading = false
                     })
                     .catch(error => {
                         alert(error.response.data)
