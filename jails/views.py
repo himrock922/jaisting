@@ -29,7 +29,6 @@ def fetch_jails(request):
         jails_json = []
         count = 1
         for jail in jails:
-            jail.state.query()
             jail_dict = OrderedDict([
                 ('id', count),
                 ('jid', jail.jid),
@@ -79,7 +78,7 @@ def release_download(request):
 def start(request):
     try:
         response = json.loads(request.body)
-        jail = libioc.Jail(response['jail_name'])
+        jail = libioc.Jail.Jail(response['jail_name'])
         jail.start()
     except (libioc.errors.JailAlreadyRunning):
         return HttpResponse('%s is already running' % response['jail_name'], status=409)
@@ -90,7 +89,7 @@ def start(request):
 def stop(request):
     try:
         response = json.loads(request.body)
-        jail = libioc.Jail(response['jail_name'])
+        jail = libioc.Jail.Jail(response['jail_name'])
         jail.stop()
     except (libioc.errors.JailNotRunning):
         return HttpResponse('%s is not running' % response['jail_name'], status=409)
@@ -111,7 +110,7 @@ def create(request):
     try:
         response = json.loads(request.body)
         release = libioc.Release(response['release'])
-        jail = libioc.Jail(data=dict(name=response['jail_name']), new=True)
+        jail = libioc.Jail(data=dict(host_hostuuid = 1, name=response['jail_name']), new=True)
         jail.create(release)
     except(libioc.errors.JailAlreadyExists):
         return HttpResponse('%s is already exists' % response['jail_name'], status=409)

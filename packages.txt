@@ -1,9 +1,12 @@
-Django==2.1.2
+Django==2.1.4
+django-webpack-loader==0.6.0
+freebsd-sysctl==0.0.4
 gitdb2==2.0.5
 GitPython==2.1.11
-ioc==0.3.1
-iocage==0.3.1
-pytz==2018.6
+jail==0.0.3
+git+https://github.com/bsdci/libioc@0.7.0
+git+https://github.com/freenas/py-libzfs.git@FN-11.2-RELEASE#egg=libzfs
+psycopg2==2.7.7
+pytz==2018.9
 smmap2==2.0.5
-sqlite3==0.0.0
 ucl==0.8
