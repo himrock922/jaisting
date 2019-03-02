@@ -1,1 +1,2 @@
 export const RELOAD_JAILS = 'RELOAD_JAILS'
+export const RELOAD_RELEASES = 'RELOAD_RELEASES'
