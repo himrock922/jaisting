@@ -14,15 +14,18 @@
         },
         methods: {
             jail_delete: function () {
+                this.$store.state.loading = true
                 axios.delete(this.$store.state.serverName + '/jails/delete', {
                     data: { jail_name: this.jail_name }
                 })
                     .then(response => {
                         console.log(response)
                         this.$store.dispatch('reload_jails')
+                        this.$store.state.loading = false
                     })
                     .catch(error => {
                         alert(error.response.data)
+                        this.$store.state.loading = false
                     })
             }
         }
