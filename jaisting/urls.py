@@ -19,8 +19,8 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='index.html')),
     path('django_admins/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='index.html')),
     url(r'^jails/', include('jails.urls')),
 ]

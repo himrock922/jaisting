@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import Http404
 from django.http import HttpResponse
 from collections import OrderedDict
+from django.contrib.auth.decorators import login_required
 import json
 import libioc
 
-
+@login_required
 def index(request):
     return render(request, 'jails/index.html')
 
