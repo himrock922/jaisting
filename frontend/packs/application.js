@@ -7,6 +7,7 @@ import '../css/top.css'
 import { store } from './store/index'
 import JailsIndex from './components/jails_index.vue'
 import JailNew from './components/jail_new.vue'
+import NetworkNew from './components/networks/network_new.vue'
 import Vue from 'vue'
 import BootstrapVue from "bootstrap-vue";
 Vue.use(BootstrapVue);
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             components: {
                 'jails-index': JailsIndex,
                 'jail-new': JailNew,
+                'network-new': NetworkNew,
             }
         })
     }

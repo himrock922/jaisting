@@ -67,7 +67,7 @@
     top: 50%;
     left: 50%;
     margin-left: -75x;
-    margin-top: -75px;
+    margin-top: 150px;
     overflow: auto;
   }
 </style>

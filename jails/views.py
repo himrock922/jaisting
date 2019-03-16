@@ -6,9 +6,11 @@ from django.contrib.auth.decorators import login_required
 import json
 import libioc
 
+
 @login_required
 def index(request):
     return render(request, 'jails/index.html')
+
 
 def detail(request, jail_name):
     try:
@@ -16,6 +18,7 @@ def detail(request, jail_name):
     except (libioc.errors.JailNotFound):
         raise Http404('%s does not found' % jail_name)
     return render(request, 'jails/detail.html', {'jail': jail.config})
+
 
 def new(request):
     try:
@@ -44,6 +47,7 @@ def fetch_jails(request):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
 
+
 def fetch_releases(request):
     try:
         distribution = libioc.Distribution()
@@ -58,6 +62,7 @@ def fetch_releases(request):
     except (libioc.errors.IocageException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
+
 
 def release_download(request):
     try:
@@ -76,6 +81,7 @@ def release_download(request):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
 
+
 def start(request):
     try:
         response = json.loads(request.body)
@@ -86,6 +92,7 @@ def start(request):
     except (libioc.errors.JailNotFound):
         raise Http404('%s does not found' % response['jail_name'])
     return HttpResponse('OK')
+
 
 def stop(request):
     try:
@@ -98,6 +105,7 @@ def stop(request):
         raise Http404('%s does not found' % response['jail_name'])
     return HttpResponse('OK')
 
+
 def delete(request):
     try:
         response = json.loads(request.body)
@@ -107,11 +115,12 @@ def delete(request):
         raise Http404('%s does not found' % response['jail_name'])
     return HttpResponse('OK')
 
+
 def create(request):
     try:
         response = json.loads(request.body)
         release = libioc.Release(response['release'])
-        jail = libioc.Jail(data=dict(host_hostuuid = 1, name=response['jail_name']), new=True)
+        jail = libioc.Jail(data=dict(name=response['jail_name']), new=True)
         jail.create(release)
     except(libioc.errors.JailAlreadyExists):
         return HttpResponse('%s is already exists' % response['jail_name'], status=409)
