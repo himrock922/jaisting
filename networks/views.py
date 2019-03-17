@@ -19,7 +19,6 @@ def create(request):
         bridge = libioc.BridgeInterface.BridgeInterface(name=response['bridge_name'], secure_vnet=True)
         jail = libioc.Jail(response['jail_name'])
         ipv4 = ipaddress.IPv4Interface(response['ipv4_addresses'])
-        libioc.NetworkInterface.NetworkInterface(create=True, jail=jail, vnet='vnet0:bridge0', ipv4_addresses=[ipv4])
         commands_created, commands_start = libioc.Network.Network(jail=jail, bridge=bridge, ipv4_addresses= [ipv4]).setup()
     except (ipaddress.AddressValueError):
         return JsonResponse({'reason': 'Address cannot be empty'}, status=400)

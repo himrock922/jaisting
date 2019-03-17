@@ -10,7 +10,6 @@
         <p v-for="command in commands_created">
           {{ command }}
         </p>
-        <br />
         <p v-for="command in commands_start">
           {{ command }}
         </p>
@@ -74,7 +73,7 @@
                             commands.push(commands_created[i])
                         }
                         this.commands_created = commands
-                        let commands_start = response.data.commands_created
+                        let commands_start = response.data.commands_start
                         let len2 = response.data.commands_start.length
                         for (let i = 0; i < len2; i++) {
                             commands2.push(commands_start[i])
