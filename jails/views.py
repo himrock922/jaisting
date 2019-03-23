@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.http import Http404
 from django.http import HttpResponse
+from django.http import JsonResponse
 from collections import OrderedDict
+from django.contrib.auth.decorators import login_required
 import json
 import libioc
 
 
+@login_required
 def index(request):
     return render(request, 'jails/index.html')
+
 
 def detail(request, jail_name):
     try:
@@ -16,10 +20,11 @@ def detail(request, jail_name):
         raise Http404('%s does not found' % jail_name)
     return render(request, 'jails/detail.html', {'jail': jail.config})
 
+
 def new(request):
     try:
         distribution = libioc.Distribution()
-    except(libioc.errors.IocageException):
+    except(libioc.errors.IocException):
         raise Http404('Jails does not found')
     return render(request, 'jails/new.html', {'distribution': distribution.releases})
 
@@ -39,9 +44,10 @@ def fetch_jails(request):
             jails_json.append(jail_dict)
             count += 1
         response = json.dumps(jails_json)
-    except (libioc.errors.IocageException):
+    except (libioc.errors.IocException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
+
 
 def fetch_releases(request):
     try:
@@ -57,6 +63,7 @@ def fetch_releases(request):
     except (libioc.errors.IocageException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
+
 
 def release_download(request):
     try:
@@ -75,6 +82,7 @@ def release_download(request):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
 
+
 def start(request):
     try:
         response = json.loads(request.body)
@@ -85,6 +93,7 @@ def start(request):
     except (libioc.errors.JailNotFound):
         raise Http404('%s does not found' % response['jail_name'])
     return HttpResponse('OK')
+
 
 def stop(request):
     try:
@@ -97,21 +106,23 @@ def stop(request):
         raise Http404('%s does not found' % response['jail_name'])
     return HttpResponse('OK')
 
+
 def delete(request):
     try:
         response = json.loads(request.body)
         jail = libioc.Jail(response['jail_name'])
         jail.destroy()
     except (libioc.errors.JailNotFound):
-        raise Http404('%s does not found' % response['jail_name'])
+        return JsonResponse({'reason': '%s does not found' % response['jail_name']}, status=404)
     return HttpResponse('OK')
+
 
 def create(request):
     try:
         response = json.loads(request.body)
         release = libioc.Release(response['release'])
-        jail = libioc.Jail(data=dict(host_hostuuid = 1, name=response['jail_name']), new=True)
+        jail = libioc.Jail(data=dict(name=response['jail_name']), new=True)
         jail.create(release)
     except(libioc.errors.JailAlreadyExists):
-        return HttpResponse('%s is already exists' % response['jail_name'], status=409)
+        return JsonResponse({'reason': '%s is already exists' % response['jail_name']}, status=409)
     return HttpResponse('OK')

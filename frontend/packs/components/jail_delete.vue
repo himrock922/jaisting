@@ -19,12 +19,11 @@
                     data: { jail_name: this.jail_name }
                 })
                     .then(response => {
-                        console.log(response)
                         this.$store.dispatch('reload_jails')
                         this.$store.state.loading = false
                     })
                     .catch(error => {
-                        alert(error.response.data)
+                        alert(error.response.data.reason)
                         this.$store.state.loading = false
                     })
             }

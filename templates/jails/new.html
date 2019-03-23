@@ -3,19 +3,10 @@
 {% block title %}Jail New{% endblock %}
 
 {% block content %}
-  <main class="dashboard">
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-      <a href="{% url 'jails:index' %}" class="navbar-brand col-sm-3 col-md-2 mr-0">Jails</a>
-      <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-          <a class="nav-link" href="{% url 'logout' %}">log out</a>
-        </li>
-      </ul>
-    </nav>
-    <div class="container-fluid">
-      <div id="app">
-        <jail-new></jail-new>
-      </div>
+
+  <div class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <div id="app">
+      <jail-new></jail-new>
     </div>
-  </main>
+  </div>
 {% endblock %}

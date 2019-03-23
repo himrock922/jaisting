@@ -1,0 +1,12 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Jail Hosting System{% endblock %}</title>
+      {% render_bundle 'main' %}
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+</html>
