@@ -42,15 +42,17 @@
         },
         methods: {
             jail_create: function () {
+                this.$store.state.loading = true
                 axios.post(this.$store.state.serverName + '/jails/create', {
                     jail_name: this.input_name,
                     release: this.selected
                 })
                     .then(response => {
-                        console.log(response)
+                        this.$store.state.loading = false
                     })
                     .catch(error => {
-                        alert(error.response)
+                        this.$store.state.loading = false
+                        alert(error.response.data.reason)
                     })
             }
         },

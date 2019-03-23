@@ -14,12 +14,14 @@ def new(request):
 def create(request):
     try:
         response = json.loads(request.body)
-        print(response['bridge_name'])
-        print(response['ipv4_addresses'])
         bridge = libioc.BridgeInterface.BridgeInterface(name=response['bridge_name'], secure_vnet=True)
         jail = libioc.Jail(response['jail_name'])
         ipv4 = ipaddress.IPv4Interface(response['ipv4_addresses'])
         commands_created, commands_start = libioc.Network.Network(jail=jail, bridge=bridge, ipv4_addresses= [ipv4]).setup()
+        jail.config["vnet"] = True
+        jail.config["interfaces"] = f"{response['interfaces']}:{response['bridge_name']}"
+        jail.config["ip4_addr"] = f"{response['interfaces']}|{response['ipv4_addresses']}"
+        jail.save()
     except (ipaddress.AddressValueError):
         return JsonResponse({'reason': 'Address cannot be empty'}, status=400)
     except (libioc.errors.VnetBridgeDoesNotExist):
@@ -36,6 +38,8 @@ def get_jails(request):
         jails_name_json = []
         count = 1
         for jail in jails:
+            if jail.running:
+                continue
             jail_dict = OrderedDict([
                 ('name', jail.name)
             ])

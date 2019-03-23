@@ -6,7 +6,7 @@
   <div v-else-if="!$store.state.loading">
     <div>
       <b-modal v-model="showModal">
-        <h3>Please copy and exec via root.</h3>
+        <h3>Sample Config</h3>
         <p v-for="command in commands_created">
           {{ command }}
         </p>
@@ -15,18 +15,21 @@
         </p>
       </b-modal>
     </div>
-    <h2>Network New</h2>
     <b-form-group label="Create Network">
 
       <b-form-input v-model="bridge_name"
                     type="text"
-                    placeholder="Please Input of Brdige Interface Name"></b-form-input>
+                    placeholder="Please Input of Brdige Interface Name to associate jail"></b-form-input>
       <p>Value: {{ bridge_name }}</p>
       <b-form-select v-model="selected" :options="$store.state.jail_names" class="mb-3"/>
       <div>Selected: <strong>{{ selected }}</strong></div>
+      <b-form-input v-model="interfaces"
+                    type="text"
+                    placeholder="Please Input of Interface Name to associate jail"></b-form-input>
+      <p>Value: {{ interfaces }}</p>
       <b-form-input v-model="ipv4_addresses"
                     type="text"
-                    placeholder="Please Input of NetWork"></b-form-input>
+                    placeholder="Please Input of IPv4 address to associate jail"></b-form-input>
       <p>Value: {{ ipv4_addresses }}</p>
       <button type="button" class="btn btn-success" @click="network_create">Create</button>
     </b-form-group>
@@ -46,6 +49,7 @@
                 selected: null,
                 bridge_name: '',
                 ipv4_addresses: '',
+                interfaces: '',
                 commands_created: [],
                 commands_start: [],
                 showModal: false
@@ -60,11 +64,11 @@
                 axios.post(this.$store.state.serverName + '/networks/create', {
                     bridge_name: this.bridge_name,
                     ipv4_addresses: this.ipv4_addresses,
+                    interfaces: this.interfaces,
                     jail_name: this.selected
                 })
                     .then(response => {
                         this.$store.state.loading = false
-                        console.log(response.data.commands_created)
                         let commands_created = response.data.commands_created
                         let commands = []
                         let commands2 = []
