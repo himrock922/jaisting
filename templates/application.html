@@ -1,13 +1,43 @@
 {% load render_bundle from webpack_loader %}
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>{% block title %}Jail Hosting System{% endblock %}</title>
-      {% render_bundle 'main' %}
-  </head>
-  <body>
-    {% block content %}
-    {% endblock %}
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Jail Hosting System{% endblock %}</title>
+  {% render_bundle 'main' %}
+</head>
+<body>
+{% csrf_token %}
+<main class="dashboard">
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a href="{% url 'jails:index' %}" class="navbar-brand col-sm-3 col-md-2 mr-0">Jails</a>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="{% url 'logout' %}">log out</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'jails:index' %}">
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'networks:new' %}">
+                Networks
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</main>
+</body>
 </html>
