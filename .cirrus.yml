@@ -5,10 +5,11 @@ yarn_task:
   node_modules_cache:
     folder: node_modules
     fingerprint_script: cat yarn.lock
-  install_script: yarn install
+  install_script: pkg install -y yarn
+  script: yarn install
 
 task:
-  install_script: pkg install -y python37 py36-psycopg2 py36-ucl yarn postgresql11-server rsync
+  install_script: pkg install -y python37 py36-psycopg2 py36-ucl postgresql11-server rsync
   depends_on:
     - yarn
   script:
