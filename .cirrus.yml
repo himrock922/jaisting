@@ -1,5 +1,14 @@
 freebsd_instance:
   image: freebsd-12-0-release-amd64
+
+yarn_task:
+  node_modules_chache:
+    folder: node_modules
+    fingerprint_script: cat yarn.lock
+  install_script: yarn install
+
 task:
   install_script: pkg install -y python37 py36-psycopg2 py36-ucl yarn postgresql11-server rsync
-  script: git clone git@github.com:himrock922/jaisting.git
+  depends_on:
+    - yarn
+  script:
