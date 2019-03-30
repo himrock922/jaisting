@@ -2,7 +2,7 @@ freebsd_instance:
   image: freebsd-12-0-release-amd64
 
 yarn_task:
-  node_modules_chache:
+  node_modules_cache:
     folder: node_modules
     fingerprint_script: cat yarn.lock
   install_script: yarn install
