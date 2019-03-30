@@ -6,10 +6,23 @@ yarn_task:
     folder: node_modules
     fingerprint_script: cat yarn.lock
   install_script: pkg install -y yarn
-  script: yarn install
+  script:
+    - yarn install
+    - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
 
+db_task:
+  install_script:  pkg install -y postgresql11-server
+  script:
+    - sysrc postgresql_enable=YES
+    - /usr/local/etc/rc.d/postgresql initdb
+    - sudo -u postgres createuser jaisting
+    - sudo -u postgres createdb jaisting_test
+    - sudo su - postgres
+    - psql -c "alter user <username> with encrypted password 'jaisting'"
+    - psql -c "grant all privileges on database jaisting_test to jaisting"
 task:
-  install_script: pkg install -y python37 py36-psycopg2 py36-ucl postgresql11-server rsync
+  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync
   depends_on:
     - yarn
-  script:
+    - db
+  script: python3.7 manage.py migrate
