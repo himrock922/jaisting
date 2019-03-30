@@ -1,0 +1,5 @@
+freebsd_instance:
+  image: freebsd-12-0-release-amd64
+task:
+  install_script: pkg install -y python37 py36-psycopg2 py36-ucl yarn postgresql11-server rsync
+  script: git clone git@github.com:himrock922/jaisting.git

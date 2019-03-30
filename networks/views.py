@@ -36,7 +36,6 @@ def get_jails(request):
     try:
         jails = libioc.Jails()
         jails_name_json = []
-        count = 1
         for jail in jails:
             if jail.running:
                 continue
@@ -44,7 +43,6 @@ def get_jails(request):
                 ('name', jail.name)
             ])
             jails_name_json.append(jail_dict)
-            count += 1
         response = json.dumps(jails_name_json)
     except (libioc.errors.IocException):
         return JsonResponse({'reason': 'API Error'}, status=500)
