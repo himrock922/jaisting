@@ -15,6 +15,7 @@ db_task:
   script:
     - sysrc postgresql_enable=YES
     - /usr/local/etc/rc.d/postgresql initdb
+    - /usr/local/etc/rc.d/postgresql start
     - sudo -u postgres createuser jaisting
     - sudo -u postgres createdb jaisting_test
     - sudo su - postgres

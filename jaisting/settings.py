@@ -85,6 +85,9 @@ DATABASES = {
         'PASSWORD': 'jaisting',
         'HOST': 'localhost',
         'PORT': '',
+        'TEST': {
+            'NAME': 'jaisting_test',
+        }
     }
 }
 
