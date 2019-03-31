@@ -84,10 +84,15 @@ DATABASES = {
         'USER': 'jaisting',
         'PASSWORD': 'jaisting',
         'HOST': 'localhost',
-        'PORT': '',
-        'TEST': {
-            'NAME': 'jaisting_test',
-        }
+        'PORT': ''
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'jaisting_test',
+        'USER': 'jaisting',
+        'PASSWORD': 'jaisting',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
