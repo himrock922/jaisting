@@ -18,7 +18,7 @@ db_task:
     - /usr/local/etc/rc.d/postgresql start
     - sudo -u postgres createuser jaisting
     - sudo -u postgres createdb jaisting_test
-    - sudo -u postgres psql -c "alter user jaisting with encrypted password jaisting"
+    - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
     - sudo -u postgres psql -c "grant all privileges on database jaisting_test to jaisting"
 task:
   install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync
