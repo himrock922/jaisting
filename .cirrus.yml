@@ -21,7 +21,7 @@ db_task:
     - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
     - sudo -u postgres psql -c "grant all privileges on database jaisting_test to jaisting"
 task:
-  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync
+  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync git
   depends_on:
     - yarn
     - db
