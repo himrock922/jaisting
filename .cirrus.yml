@@ -4,11 +4,11 @@ freebsd_instance:
 task:
   install_script:
     - pkg update
-    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server postgresql11-client yarn
+    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server yarn
   script:
     - sysrc postgresql_enable=YES
-    - /usr/local/etc/rc.d/postgresql initdb
-    - /usr/local/etc/rc.d/postgresql start
+    - service postgresql initdb
+    - service ostgresql start
     - sudo -u postgres createuser jaisting
     - sudo -u postgres createdb jaisting_test
     - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
