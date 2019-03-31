@@ -4,8 +4,9 @@ freebsd_instance:
 task:
   install_script:
     - pkg update
-    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server yarn
+    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git
   script:
+    - pkg install -y postgresql11-server yarn
     - sysrc postgresql_enable=YES
     - service postgresql initdb
     - service ostgresql start
