@@ -25,4 +25,6 @@ task:
   depends_on:
     - yarn
     - db
-  script: python3.7 manage.py migrate
+  script:
+    - pip install -r packages.txt
+    - python3.7 manage.py migrate
