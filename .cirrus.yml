@@ -17,7 +17,7 @@ task:
     - python3.7 -m ensurepip
     - python3.7 -m pip install Cython==0.29.5
     - python3.7 -m pip install -r packages.txt
-    - python3.7 manage.py migrate --database jaisting_test
+    - python3.7 manage.py migrate --database=jaisting_test
     - yarn install
     - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
 
