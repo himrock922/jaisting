@@ -9,7 +9,7 @@ task:
     - pkg install -y postgresql11-server yarn
     - sysrc postgresql_enable=YES
     - service postgresql initdb
-    - service ostgresql start
+    - service postgresql start
     - sudo -u postgres createuser jaisting
     - sudo -u postgres createdb jaisting_test
     - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
