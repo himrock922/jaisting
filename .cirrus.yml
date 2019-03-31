@@ -1,17 +1,8 @@
 freebsd_instance:
   image: freebsd-12-0-release-amd64
 
-yarn_task:
-  node_modules_cache:
-    folder: node_modules
-    fingerprint_script: cat yarn.lock
-  install_script: pkg install -y yarn
-  script:
-    - yarn install
-    - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
-
-db_task:
-  install_script:  pkg install -y postgresql11-server
+task:
+  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server yarn
   script:
     - sysrc postgresql_enable=YES
     - /usr/local/etc/rc.d/postgresql initdb
@@ -20,14 +11,10 @@ db_task:
     - sudo -u postgres createdb jaisting_test
     - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
     - sudo -u postgres psql -c "grant all privileges on database jaisting_test to jaisting"
-task:
-  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync git
-  depends_on:
-    - yarn
-    - db
-  script:
     - python3.7 -m ensurepip
     - python3.7 -m pip install Cython==0.29.5
     - python3.7 -m pip install -r packages.txt
-    - /usr/local/etc/rc.d/postgresql restart
     - python3.7 manage.py migrate
+    - yarn install
+    - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
+
