@@ -2,7 +2,9 @@ freebsd_instance:
   image: freebsd-12-0-release-amd64
 
 task:
-  install_script: pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server yarn
+  install_script:
+    - pkg update
+    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git postgresql11-server postgresql11-client yarn
   script:
     - sysrc postgresql_enable=YES
     - /usr/local/etc/rc.d/postgresql initdb
