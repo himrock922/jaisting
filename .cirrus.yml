@@ -11,13 +11,12 @@ task:
     - service postgresql initdb
     - service postgresql start
     - sudo -u postgres createuser jaisting
-    - sudo -u postgres createdb jaisting_test
     - sudo -u postgres psql -c "alter user jaisting with encrypted password 'jaisting'"
-    - sudo -u postgres psql -c "grant all privileges on database jaisting_test to jaisting"
+    - sudo -u postgres psql -c "alter role jaisting with createdb"
     - python3.7 -m ensurepip
     - python3.7 -m pip install Cython==0.29.5
     - python3.7 -m pip install -r packages.txt
-    - python3.7 manage.py migrate --database=test
     - yarn install
     - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
+    - python3.7 manage.py test
 
