@@ -5,6 +5,8 @@ task:
   install_script:
     - pkg update
     - pkg install -y python37 py36-psycopg2 py36-ucl rsync git
+  check_script:
+    - mount
   script:
     - pkg install -y postgresql11-server yarn
     - sysrc postgresql_enable=YES

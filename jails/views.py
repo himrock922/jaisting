@@ -28,6 +28,7 @@ def new(request):
         raise Http404('Jails does not found')
     return render(request, 'jails/new.html', {'distribution': distribution.releases})
 
+
 def fetch_jails(request):
     try:
         jails = libioc.Jails()
