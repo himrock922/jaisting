@@ -13,6 +13,7 @@ def index(request):
     return render(request, 'jails/index.html')
 
 
+@login_required
 def detail(request, jail_name):
     try:
         jail = libioc.Jail(jail_name)
@@ -21,6 +22,7 @@ def detail(request, jail_name):
     return render(request, 'jails/detail.html', {'jail': jail.config})
 
 
+@login_required
 def new(request):
     try:
         distribution = libioc.Distribution()
