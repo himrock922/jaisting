@@ -18,5 +18,6 @@ task:
     - python3.7 -m pip install -r packages.txt
     - yarn install
     - ./node_modules/.bin/webpack --config webpack.config.js --mode=development
+    - flake8 ./**/*.py
     - python3.7 manage.py test
 
