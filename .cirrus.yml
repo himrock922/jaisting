@@ -8,6 +8,11 @@ task:
   check_script:
     - mount
   script:
+    - mkdir -p /pools
+    - truncate -s 16G "/pools/jaisting-test-`uname -r`.img"
+    - zpool create -m "/.jaisting-test-`uname -r`" "jaisting-test-`uname -r`" "/pools/jaisting-test-`uname -r`.img"
+    - zfs set compression=lz4 "jaisting-test-`uname -r`"
+    - export ZPOOL="jaisting-test-`uname -r`"
     - pkg install -y postgresql11-server yarn
     - sysrc postgresql_enable=YES
     - service postgresql initdb
