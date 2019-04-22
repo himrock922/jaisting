@@ -64,7 +64,7 @@ Please change line of following file that your server name or ip by address.
 % pip install Cython==0.29.5
 % pip install -r packages.txt
 % yarn install
-% ./node_modules/.bin/webpack --config webpack.config.js --mode=development
+% ./node_modules/webpack/bin/webpack.js --config webpack.config.js --mode=development
 % sudo python3.7 manage.py runserver 0.0.0.0:8080
 ```
 
