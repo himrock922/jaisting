@@ -123,4 +123,10 @@ ${fwcmd} add 65000 allow ip from any to any
 ${fwcmd} add 65535 deny ip from any to any
 ```
 
+### jail Configuration
+
+```
+route add default {bridge_ipaddress}
+```
+
 jaisting is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
