@@ -68,8 +68,6 @@ Please change line of following file that your server name or ip by address.
 % sudo python3.7 manage.py runserver 0.0.0.0:8080
 ```
 
-jaisting is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
-
 ## IPFW + NAT
 
 ### Host Configuration
@@ -124,3 +122,5 @@ ${fwcmd} add 64001 divert natd ip from any to any via {oif} out
 ${fwcmd} add 65000 allow ip from any to any
 ${fwcmd} add 65535 deny ip from any to any
 ```
+
+jaisting is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
