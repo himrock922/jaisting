@@ -5,14 +5,11 @@
   </div>
   <div v-else-if="!$store.state.loading">
     <div>
-      <b-modal v-model="showModal">
-        <h3>Sample Config</h3>
-        <p v-for="command in commands_created">
-          {{ command }}
-        </p>
-        <p v-for="command in commands_start">
-          {{ command }}
-        </p>
+      <b-modal v-model="showDialog">
+        <h3>network configured.</h3>
+        <p>jail_name: {{ config.id }}</p>
+        <p>interfaces: {{ config.interfaces }}</p>
+        <p>ipv4_addr: {{ config.ip4_addr }}</p>
       </b-modal>
     </div>
     <b-form-group label="Create Network">
@@ -52,7 +49,8 @@
                 interfaces: '',
                 commands_created: [],
                 commands_start: [],
-                showModal: false
+                showDialog: false,
+                config: {}
             }
         },
         components: {
@@ -69,21 +67,8 @@
                 })
                     .then(response => {
                         this.$store.state.loading = false
-                        let commands_created = response.data.commands_created
-                        let commands = []
-                        let commands2 = []
-                        let len = response.data.commands_created.length
-                        for (let i = 0; i < len; i++) {
-                            commands.push(commands_created[i])
-                        }
-                        this.commands_created = commands
-                        let commands_start = response.data.commands_start
-                        let len2 = response.data.commands_start.length
-                        for (let i = 0; i < len2; i++) {
-                            commands2.push(commands_start[i])
-                        }
-                        this.commands_start = commands2
-                        this.showModal = true
+                        this.config = response.data.jail_config
+                        this.showDialog = true
                     })
                     .catch(error => {
                         this.$store.state.loading = false
