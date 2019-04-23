@@ -35,17 +35,17 @@ def fetch_jails(request):
     try:
         jails = libioc.Jails()
         jails_json = []
-        count = 1
+        key_id = 1
         for jail in jails:
             jail_dict = OrderedDict([
-                ('id', count),
+                ('id', key_id),
                 ('jid', jail.jid),
                 ('name', jail.name),
                 ('status', 'up' if jail.running else 'down'),
                 ('release', str(jail.release))
             ])
             jails_json.append(jail_dict)
-            count += 1
+            key_id += 1
         response = json.dumps(jails_json)
     except (libioc.errors.IocException):
         return HttpResponse('API Error', status=500)
