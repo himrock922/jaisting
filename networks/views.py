@@ -20,8 +20,8 @@ def create(request):
         jail = libioc.Jail(response['jail_name'])
         ipv4 = ipaddress.IPv4Interface(response['ipv4_addresses'])
         jail.config["vnet"] = True
-        jail.config["interfaces"] = f"{response['interfaces']}:{response['bridge_name']}"
-        jail.config["ip4_addr"] = f"{response['interfaces']}|{response['ipv4_addresses']}"
+        jail.config["interfaces"] = f"{response['interfaces']}:{bridge}"
+        jail.config["ip4_addr"] = f"{response['interfaces']}|{ipv4}"
         jail.save()
     except (ipaddress.AddressValueError):
         return JsonResponse({'reason': 'Address cannot be empty'}, status=400)
