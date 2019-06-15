@@ -29,7 +29,7 @@
         components: {
             'vue-loading': VueLoading
         },
-        created: function () {
+        mounted: function () {
             this.$store.dispatch('reload_firewalls')
         }
     }

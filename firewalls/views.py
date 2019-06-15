@@ -12,8 +12,8 @@ from libipfw.ipfw_list import IPFW_List
 
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
-    firewall = IPFW_List()
-    return render(request, 'firewalls/index.html', {'firewalls': firewall.all_results()})
+    return render(request, 'firewalls/index.html')
+
 
 
 def fetch_all_lists(request: HttpRequest) -> JsonResponse:
