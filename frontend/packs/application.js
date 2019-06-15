@@ -5,6 +5,7 @@ import '../css/login.css'
 import '../css/dashboard.css'
 import '../css/top.css'
 import { store } from './store/index'
+import FirewallsIndex from './components/firewalls/firewalls_index.vue'
 import JailsIndex from './components/jails_index.vue'
 import JailNew from './components/jail_new.vue'
 import NetworkNew from './components/networks/network_new.vue'
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 'jails-index': JailsIndex,
                 'jail-new': JailNew,
                 'network-new': NetworkNew,
+                'firewalls-index' : FirewallsIndex,
             }
         })
     }
