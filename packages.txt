@@ -1,3 +1,4 @@
+autopep8==1.4.3
 Django==2.1.4
 django-webpack-loader==0.6.0
 entrypoints==0.3
