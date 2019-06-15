@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
     state: {
         serverName: 'http://localhost',
         jails: {},
+        firewalls: [],
         jail_names: {},
         fetched_releases: [],
         non_fetch_releases: [],
@@ -20,6 +21,9 @@ export const store = new Vuex.Store({
     mutations: {
         [types.FETCH_JAILS](state, jail_names) {
             state.jail_names = jail_names
+        },
+        [types.RELOAD_FIREWALLS](state, firewalls) {
+            state.firewalls = firewalls
         },
         [types.RELOAD_JAILS](state, jails) {
             state.jails = jails
@@ -43,6 +47,19 @@ export const store = new Vuex.Store({
                     }
                 });
             context.commit(types.FETCH_JAILS, jail_names);
+        },
+        async reload_firewalls(context) {
+            let firewalls = [];
+            await axios.get(this.state.serverName + '/firewalls/fetch_all_lists', {})
+                .then(response => {
+                    let json_response = []
+                    json_response = response.data.firewall_lists
+                    let len = response.data.firewall_lists.length
+                    for (let i = 0; i < len; i++) {
+                        firewalls.push(json_response[i])
+                    }
+                });
+            context.commit(types.RELOAD_FIREWALLS, firewalls);
         },
         async reload_jails(context) {
             let jails = {};
