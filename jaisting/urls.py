@@ -7,7 +7,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
     path('django_admins/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    url(r'^firewalls/', include('firewalls.urls')),
+    url(r'^firewall/', include('firewall.urls')),
     url(r'^jails/', include('jails.urls')),
     url(r'^networks/', include('networks.urls')),
 ]

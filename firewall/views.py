@@ -12,7 +12,7 @@ from libipfw.ipfw_list import IPFW_List
 
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, 'firewalls/index.html')
+    return render(request, 'firewall/index.html')
 
 
 

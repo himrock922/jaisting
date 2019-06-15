@@ -10,8 +10,8 @@
       </tr>
       </thead>
       <tbody id="app">
-      <tr v-for=" firewall in $store.state.firewalls">
-          <td>{{ firewall }}</td>
+      <tr v-for=" list in $store.state.firewall_lists">
+          <td>{{ list }}</td>
       </tr>
       </tbody>
     </table>
@@ -25,12 +25,12 @@
     axios.defaults.xsrfCookieName = 'csrftoken'
     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
     export default {
-        name: 'Firewalls-Index',
+        name: 'Firewall-Index',
         components: {
             'vue-loading': VueLoading
         },
         mounted: function () {
-            this.$store.dispatch('reload_firewalls')
+            this.$store.dispatch('reload_firewall')
         }
     }
 </script>
