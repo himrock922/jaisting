@@ -6,12 +6,25 @@
     <table class="table table-striped table-sm">
       <thead>
       <tr>
-        <th>All Results</th>
+        <th>Rule Number</th>
+        <th>Rule Format</th>
+        <th>Protocol Target</th>
+        <th></th>
+        <th>From Target</th>
+        <th></th>
+        <th>To Target</th>
       </tr>
       </thead>
       <tbody id="app">
-      <tr v-for=" list in $store.state.firewall_lists">
-          <td>{{ list }}</td>
+      <tr v-for="(list, index) in this.firewall_lists">
+          <td>{{ list[0] }}</td>
+          <td>{{ list[1] }}</td>
+          <td>{{ list[2] }}</td>
+          <td>{{ list[3] }}</td>
+          <td>{{ list[4] }}</td>
+          <td>{{ list[5] }}</td>
+          <td>{{ list[6] }}</td>
+          <td>{{ list[7] }}</td>
       </tr>
       </tbody>
     </table>
@@ -26,11 +39,42 @@
     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
     export default {
         name: 'Firewall-Index',
+        data: function() {
+          return {
+            firewall_lists: []
+          }
+        },
         components: {
             'vue-loading': VueLoading
         },
-        mounted: function () {
-            this.$store.dispatch('reload_firewall')
+        async mounted() {
+            await this.$store.dispatch('reload_firewall')
+            let flatten_array = this.$store.state.firewall_lists
+
+            for(var i = 0; i < flatten_array.length; i++) {
+              let firewall_rule = flatten_array[i].split(/\s/)
+              let style_range;
+              let generater_firewall_rule = [];
+              firewall_rule.map(function(value, index) {
+                if(value === 'from') {
+                  generater_firewall_rule.push(style_range);
+                  style_range = "";
+                  generater_firewall_rule.push(firewall_rule[index]);
+                }
+                if(value === 'to') {
+                  generater_firewall_rule.push(style_range.slice(6));
+                  style_range = "";
+                  generater_firewall_rule.push(firewall_rule[index]);
+                }
+                style_range += " " + value;
+                if(index === 0 || index === 1) {
+                  generater_firewall_rule.push(firewall_rule[index]);
+                  style_range = "";
+                }
+              });
+              generater_firewall_rule.push(style_range.slice(4));
+              this.firewall_lists.push(generater_firewall_rule);
+            }
         }
     }
 </script>
