@@ -15,7 +15,6 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'firewall/index.html')
 
 
-
 def fetch_all_lists(request: HttpRequest) -> JsonResponse:
     firewall = IPFW_List()
     response = firewall.results()
