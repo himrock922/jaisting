@@ -3,6 +3,10 @@
     <vue-loading type="spin" :size="{ width: '150px', height: '150px' }"></vue-loading>
   </div>
   <div v-else-if="!$store.state.loading">
+    <b-button variant="success" id="ipfw-add" @click="toggleModal">Add</b-button>
+    <b-modal ref="my-modal" hide-footer title="add chain">
+      <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
+    </b-modal>
     <table class="table table-striped table-sm">
       <thead>
       <tr>
@@ -46,6 +50,11 @@
         },
         components: {
             'vue-loading': VueLoading
+        },
+        methods: {
+          toggleModal() {
+            this.$refs['my-modal'].toggle('#ipfw-add')
+          }
         },
         async mounted() {
             await this.$store.dispatch('reload_firewall')

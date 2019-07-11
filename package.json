@@ -3,7 +3,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "babel-loader": "^8.0.4",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "bootstrap-vue": "^2.0.0-rc.26",
     "css-loader": "^1.0.1",
     "style-loader": "^0.23.1",
     "vue": "^2.5.17",
