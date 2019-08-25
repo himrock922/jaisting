@@ -3,9 +3,49 @@
     <vue-loading type="spin" :size="{ width: '150px', height: '150px' }"></vue-loading>
   </div>
   <div v-else-if="!$store.state.loading">
-    <b-button variant="success" id="ipfw-add" @click="toggleModal">Add</b-button>
-    <b-modal ref="my-modal" hide-footer title="add chain">
-      <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
+    <b-button variant="success" id="ipfw-add" @click="ipfw_add">Add</b-button>
+    <b-modal ref="add_button" hide-footer title="add chain" size="xl">
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors">{{ error }}</li>
+        </ul>
+      </p>
+      <b-form inline>
+        <b-form-input
+        id="rule-number"
+        v-model="rule_number"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="00100"
+        ></b-form-input>
+        <b-input
+        id="rule-format"
+        v-model="rule_format"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="allow"
+        ></b-input>
+        <b-input
+        id="protocol"
+        v-model="protocol"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="any"
+        ></b-input>
+        <b-card-text class="mb-2 mr-sm-2 mb-sm-0">From</b-card-text>
+        <b-input
+        id="from-target"
+        v-model="form_target"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="any"
+        ></b-input>
+        <b-card-text class="mb-2 mr-sm-2 mb-sm-0">To</b-card-text>
+        <b-input
+        id="to-target"
+        v-model="to_target"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="any"
+        ></b-input>
+      </b-form>
+      <b-button class="mt-2" type="submit" variant="primary" @click="ipfw_exec">Submit</b-button>
     </b-modal>
     <table class="table table-striped table-sm">
       <thead>
@@ -45,15 +85,50 @@
         name: 'Firewall-Index',
         data: function() {
           return {
-            firewall_lists: []
+            firewall_lists: [],
+            rule_number: "",
+            rule_format: "",
+            protocol: "",
+            form_target: "",
+            to_target: "",
+            errors: []
           }
         },
         components: {
             'vue-loading': VueLoading
         },
         methods: {
-          toggleModal() {
-            this.$refs['my-modal'].toggle('#ipfw-add')
+          ipfw_add() {
+            this.$refs['add_button'].toggle('#ipfw-add')
+          },
+          ipfw_exec(e) {
+            this.errors = [];
+            const data = new FormData();
+            if (!this.rule_number) {
+              this.errors.push("Rule Number required.");
+            }
+            if (!this.rule_format) {
+              this.errors.push("Rule Format required.");
+            }
+            if (!this.protocol) {
+              this.errors.push("Protocol required.");
+            }
+            if (!this.form_target) {
+              this.errors.push("Form Target required.");
+            }
+            if (!this.to_target) {
+              this.errors.push("To Target required.");
+            }
+            if (this.errors.length) {
+              e.preventDefault();
+              return
+            }
+             data.append('rule_number', this.rule_number);
+             data.append('rule_target', this.rule_target);
+             data.append('protocol',    this.protocol);
+             data.append('form_target', this.form_target);
+             data.append('to_target',   this.to_target);
+             console.log(data);
           }
         },
         async mounted() {
