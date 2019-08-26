@@ -28,12 +28,12 @@
         id="protocol"
         v-model="protocol"
         class="mb-2 mr-sm-2 mb-sm-0"
-        placeholder="any"
+        placeholder="all"
         ></b-input>
         <b-card-text class="mb-2 mr-sm-2 mb-sm-0">From</b-card-text>
         <b-input
         id="from-target"
-        v-model="form_target"
+        v-model="from_target"
         class="mb-2 mr-sm-2 mb-sm-0"
         placeholder="any"
         ></b-input>
@@ -89,7 +89,9 @@
             rule_number: "",
             rule_format: "",
             protocol: "",
-            form_target: "",
+            from: "",
+            from_target: "",
+            to: "",
             to_target: "",
             errors: []
           }
@@ -103,7 +105,6 @@
           },
           ipfw_exec(e) {
             this.errors = [];
-            const data = new FormData();
             if (!this.rule_number) {
               this.errors.push("Rule Number required.");
             }
@@ -113,7 +114,7 @@
             if (!this.protocol) {
               this.errors.push("Protocol required.");
             }
-            if (!this.form_target) {
+            if (!this.from_target) {
               this.errors.push("Form Target required.");
             }
             if (!this.to_target) {
@@ -121,14 +122,24 @@
             }
             if (this.errors.length) {
               e.preventDefault();
-              return
+              return;
             }
-             data.append('rule_number', this.rule_number);
-             data.append('rule_target', this.rule_target);
-             data.append('protocol',    this.protocol);
-             data.append('form_target', this.form_target);
-             data.append('to_target',   this.to_target);
-             console.log(data);
+            this.$store.state.loading = true
+            axios.post(this.$store.state.serverName + '/firewall/add', {
+              rule_number: this.rule_number,
+              rule_format: this.rule_format,
+              protocol:    this.protocol,
+              from:        "from",
+              from_target: this.from_target,
+              to:          "to",
+              to_target:   this.to_target
+            }).then(response => {
+              this.$store.dispatch('reload_jails')
+              this.$store.state.loading = false
+            }).catch(error => {
+              this.$store.state.loading = false
+              alert(error.response.data.reason)
+            })
           }
         },
         async mounted() {

@@ -7,7 +7,7 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required
 import json
 import libioc
-from libipfw.ipfw_list import IPFW_List
+from libipfw import command_exec
 
 
 @login_required
@@ -16,6 +16,17 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def fetch_all_lists(request: HttpRequest) -> JsonResponse:
-    firewall = IPFW_List()
+    firewall = command_exec.IPFW()
     response = firewall.results()
     return JsonResponse(dict(firewall_lists=response))
+
+def add(request: HttpRequest) -> JsonResponse:
+    try:
+        command: str = ""
+        response = json.loads(request.body)
+        command = ' '.join([line for line in response.values()])
+        firewall = command_exec.IPFW()
+        firewall.add(command)
+    except (command_exec.errors.AddExecError):
+        return HttpResponse('API Error', status=500)
+    return HttpResponse('OK')
