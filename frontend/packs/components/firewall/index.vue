@@ -57,6 +57,7 @@
         <th>From Target</th>
         <th></th>
         <th>To Target</th>
+        <th></th>
       </tr>
       </thead>
       <tbody id="app">
@@ -69,6 +70,7 @@
           <td>{{ list[5] }}</td>
           <td>{{ list[6] }}</td>
           <td>{{ list[7] }}</td>
+          <td><b-button variant="danger" id="ipfw-add" @click="ipfw_delete(list, index)">Delete</b-button></td>
       </tr>
       </tbody>
     </table>
@@ -134,8 +136,20 @@
               to:          "to",
               to_target:   this.to_target
             }).then(response => {
-              this.$store.dispatch('reload_jails')
               this.$store.state.loading = false
+              this.firewall_lists.push(rule_number + " " + rule_format + " " + protocol + " " + from + " " + from_target + " " + to + " " + to_target);
+            }).catch(error => {
+              this.$store.state.loading = false
+              alert(error.response.data.reason)
+            })
+          },
+          ipfw_delete(list, index) {
+            this.$store.state.loading = true
+            axios.delete(this.$store.state.serverName + '/firewall/delete', {
+               data: { rule_number: list[0] }
+            }).then(response => {
+              this.$store.state.loading = false
+              this.firewall_lists.splice(index, 1);
             }).catch(error => {
               this.$store.state.loading = false
               alert(error.response.data.reason)

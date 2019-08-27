@@ -30,3 +30,14 @@ def add(request: HttpRequest) -> JsonResponse:
     except (command_exec.errors.AddExecError):
         return HttpResponse('API Error', status=500)
     return HttpResponse('OK')
+
+def delete(request: HttpRequest) -> JsonResponse:
+    try:
+        command: str = ""
+        response = json.loads(request.body)
+        command = ' '.join([line for line in response.values()])
+        firewall = command_exec.IPFW()
+        firewall.delete(command)
+    except (command_exec.errors.AddExecError):
+        return HttpResponse('API Error', status=500)
+    return HttpResponse('OK')
