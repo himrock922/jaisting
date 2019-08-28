@@ -3,6 +3,50 @@
     <vue-loading type="spin" :size="{ width: '150px', height: '150px' }"></vue-loading>
   </div>
   <div v-else-if="!$store.state.loading">
+    <b-button variant="success" id="ipfw-add" @click="ipfw_add">Add</b-button>
+    <b-modal ref="add_button" hide-footer title="add chain" size="xl">
+      <p v-if="errors.length">
+        <b>Please correct the following error(s):</b>
+        <ul>
+          <li v-for="error in errors">{{ error }}</li>
+        </ul>
+      </p>
+      <b-form inline>
+        <b-form-input
+        id="rule-number"
+        v-model="rule_number"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="00100"
+        ></b-form-input>
+        <b-input
+        id="rule-format"
+        v-model="rule_format"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="allow"
+        ></b-input>
+        <b-input
+        id="protocol"
+        v-model="protocol"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="all"
+        ></b-input>
+        <b-card-text class="mb-2 mr-sm-2 mb-sm-0">From</b-card-text>
+        <b-input
+        id="from-target"
+        v-model="from_target"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="any"
+        ></b-input>
+        <b-card-text class="mb-2 mr-sm-2 mb-sm-0">To</b-card-text>
+        <b-input
+        id="to-target"
+        v-model="to_target"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="any"
+        ></b-input>
+      </b-form>
+      <b-button class="mt-2" type="submit" variant="primary" @click="ipfw_exec">Submit</b-button>
+    </b-modal>
     <table class="table table-striped table-sm">
       <thead>
       <tr>
@@ -13,6 +57,7 @@
         <th>From Target</th>
         <th></th>
         <th>To Target</th>
+        <th></th>
       </tr>
       </thead>
       <tbody id="app">
@@ -25,6 +70,7 @@
           <td>{{ list[5] }}</td>
           <td>{{ list[6] }}</td>
           <td>{{ list[7] }}</td>
+          <td><b-button variant="danger" id="ipfw-add" @click="ipfw_delete(list, index)">Delete</b-button></td>
       </tr>
       </tbody>
     </table>
@@ -41,11 +87,74 @@
         name: 'Firewall-Index',
         data: function() {
           return {
-            firewall_lists: []
+            firewall_lists: [],
+            rule_number: "",
+            rule_format: "",
+            protocol: "",
+            from: "",
+            from_target: "",
+            to: "",
+            to_target: "",
+            errors: []
           }
         },
         components: {
             'vue-loading': VueLoading
+        },
+        methods: {
+          ipfw_add() {
+            this.$refs['add_button'].toggle('#ipfw-add')
+          },
+          ipfw_exec(e) {
+            this.errors = [];
+            if (!this.rule_number) {
+              this.errors.push("Rule Number required.");
+            }
+            if (!this.rule_format) {
+              this.errors.push("Rule Format required.");
+            }
+            if (!this.protocol) {
+              this.errors.push("Protocol required.");
+            }
+            if (!this.from_target) {
+              this.errors.push("Form Target required.");
+            }
+            if (!this.to_target) {
+              this.errors.push("To Target required.");
+            }
+            if (this.errors.length) {
+              e.preventDefault();
+              return;
+            }
+            this.$store.state.loading = true
+            axios.post(this.$store.state.serverName + '/firewall/add', {
+              rule_number: this.rule_number,
+              rule_format: this.rule_format,
+              protocol:    this.protocol,
+              from:        "from",
+              from_target: this.from_target,
+              to:          "to",
+              to_target:   this.to_target
+            }).then(response => {
+              this.$store.state.loading = false
+              this.firewall_lists.push(rule_number + " " + rule_format + " " + protocol + " " + from + " " + from_target + " " + to + " " + to_target);
+            }).catch(error => {
+              this.$store.state.loading = false
+              alert(error.response.data.reason)
+            })
+          },
+          ipfw_delete(list, index) {
+            this.$store.state.loading = true
+            axios.delete(this.$store.state.serverName + '/firewall/delete', {
+               data: { rule_number: list[0] }
+            }).then(response => {
+              this.$store.state.loading = false
+              this.firewall_lists.splice(index, 1);
+            }).catch(error => {
+              this.$store.state.loading = false
+              alert(error.response.data.reason)
+            })
+          }
         },
         async mounted() {
             await this.$store.dispatch('reload_firewall')
