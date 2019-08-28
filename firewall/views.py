@@ -20,6 +20,7 @@ def fetch_all_lists(request: HttpRequest) -> JsonResponse:
     response = firewall.results()
     return JsonResponse(dict(firewall_lists=response))
 
+
 def add(request: HttpRequest) -> JsonResponse:
     try:
         command: str = ""
@@ -30,6 +31,7 @@ def add(request: HttpRequest) -> JsonResponse:
     except (command_exec.errors.AddExecError):
         return HttpResponse('API Error', status=500)
     return HttpResponse('OK')
+
 
 def delete(request: HttpRequest) -> JsonResponse:
     try:
