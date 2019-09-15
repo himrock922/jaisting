@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 
 class AccountsLoginTest(StaticLiveServerTestCase):
 
+
     @classmethod
     def setUpClass(self):
         super().setUpClass()
@@ -15,7 +16,7 @@ class AccountsLoginTest(StaticLiveServerTestCase):
         options.binary_location = CHROME_BIN
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
-        self.selenium = webdriver.Chrome('/usr/local/bin/chromedriver', options=options)
+        self.selenium = webdriver.Chrome(CHROME_DRIVER, options=options)
         self.selenium.implicitly_wait(10)
         User = get_user_model()
         User.objects.create_user(username="test", password="test1234")
@@ -31,4 +32,3 @@ class AccountsLoginTest(StaticLiveServerTestCase):
         self.selenium.find_element_by_name("password").send_keys('test1234')
         self.selenium.find_element_by_xpath('//button').click()
         self.assertEquals('Jail List', self.selenium.title)
-        self.selenium.save_screenshot('screenie.png')
