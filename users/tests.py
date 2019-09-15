@@ -4,8 +4,8 @@ from selenium import webdriver
 from django.contrib.auth import get_user_model
 from selenium.webdriver.chrome.options import Options
 
-class AccountsLoginTest(StaticLiveServerTestCase):
 
+class AccountsLoginTest(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(self):
