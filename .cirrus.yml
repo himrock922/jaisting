@@ -4,7 +4,7 @@ freebsd_instance:
 task:
   install_script:
     - pkg update
-    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git chromium ja-font-ipa
+    - pkg install -y python37 py36-psycopg2 py36-ucl rsync git chromium ja-font-ipa libnghttp2
   check_script:
     - mount
   script:
