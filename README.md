@@ -14,7 +14,7 @@ This is hosting system of jail of paravirtualization system  for FreeBSD.
 
 ```bash
 % sudo pkg update
-% sudo pkg install python37 py36-psycopg2 py36-ucl yarn postgresql11-server rsync
+% sudo pkg install python37 py36-psycopg2 py36-ucl yarn postgresql11-server rsync chromium ja-font-ipa
 % mkdir server
 % cd server
 % git clone git@github.com:himrock922/jaisting.git
