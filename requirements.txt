@@ -1,4 +1,5 @@
 autopep8==1.4.3
+chromedriver-binary==78.0.3904.11.0
 Django==2.1.4
 django-webpack-loader==0.6.0
 entrypoints==0.3
@@ -6,6 +7,7 @@ flake8==3.7.7
 freebsd-sysctl==0.0.5
 gitdb2==2.0.5
 GitPython==2.1.11
+gunicorn==19.9.0
 jail==0.0.8
 git+https://github.com/bsdci/libioc@0.8.0
 git+https://github.com/freenas/py-libzfs.git@FN-11.2-RELEASE#egg=libzfs
