@@ -19,7 +19,8 @@
     "vue-loading-template": "^1.3.2",
     "vue-template-compiler": "^2.5.21",
     "vuex": "^3.0.1",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "xterm": "^4.2.0-vscode1"
   },
   "scripts": {
     "start": "webpack --config webpack.dev.js",

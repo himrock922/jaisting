@@ -21,6 +21,14 @@ def detail(request, jail_name):
         raise Http404('%s does not found' % jail_name)
     return render(request, 'jails/detail.html', {'jail': jail.config})
 
+@login_required
+def connect(request, jail_name):
+    try:
+        jail = libioc.Jail(jail_name)
+    except (libioc.errors.JailNotFound):
+        raise Http404('%s does not found' % jail_name)
+    return render(request, 'jails/connect.html', {'jail': jail.config})
+
 
 @login_required
 def new(request):
@@ -63,7 +71,7 @@ def fetch_releases(request):
             ])
             releases_json.append(release_dict)
         response = json.dumps(releases_json)
-    except (libioc.errors.IocageException):
+    except (libioc.errors.IocException):
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
 
@@ -80,7 +88,7 @@ def release_download(request):
     except FileNotFoundError:
         release.destroy()
         return HttpResponse('File Download Error', status=404)
-    except (libioc.errors.IocageException):
+    except (libioc.errors.IocException):
         release.destroy()
         return HttpResponse('API Error', status=500)
     return HttpResponse(response)
