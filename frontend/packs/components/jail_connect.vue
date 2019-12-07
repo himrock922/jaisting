@@ -11,9 +11,17 @@
     export default {
         name: 'Jails-Connect',
         mounted: function () {
-    const term = new Terminal();
-    term.open(document.getElementById('terminal'));
-    term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+          const term = new Terminal();
+          term.open(document.getElementById('terminal'));
+          term.write("$ ");
+          term.onKey((data) => {
+            if (data.domEvent.key === "Enter") {
+              term.write("\r\n");
+              term.write("$ ");
+            } else {
+              term.write(data.key);
+            }
+          });
         }
     }
 </script>

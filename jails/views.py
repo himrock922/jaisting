@@ -19,7 +19,7 @@ def detail(request, jail_name):
         jail = libioc.Jail(jail_name)
     except (libioc.errors.JailNotFound):
         raise Http404('%s does not found' % jail_name)
-    return render(request, 'jails/detail.html', {'jail': jail.config})
+    return render(request, 'jails/detail.html', {'jail': jail})
 
 @login_required
 def connect(request, jail_name):
@@ -27,7 +27,7 @@ def connect(request, jail_name):
         jail = libioc.Jail(jail_name)
     except (libioc.errors.JailNotFound):
         raise Http404('%s does not found' % jail_name)
-    return render(request, 'jails/connect.html', {'jail': jail.config})
+    return render(request, 'jails/connect.html', {'jail': jail})
 
 
 @login_required
