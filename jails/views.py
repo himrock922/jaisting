@@ -21,6 +21,7 @@ def detail(request, jail_name):
         raise Http404('%s does not found' % jail_name)
     return render(request, 'jails/detail.html', {'jail': jail})
 
+
 @login_required
 def connect(request, jail_name):
     try:
