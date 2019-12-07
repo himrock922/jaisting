@@ -14,12 +14,34 @@
           const term = new Terminal();
           term.open(document.getElementById('terminal'));
           term.write("$ ");
+          let cursor = 0;
           term.onKey((data) => {
-            if (data.domEvent.key === "Enter") {
-              term.write("\r\n");
-              term.write("$ ");
-            } else {
-              term.write(data.key);
+            switch(data.domEvent.key) {
+              case "Enter":
+                term.write("\r\n");
+                term.write("$ ");
+                cursor = 0;
+                break;
+              case "ArrowUp", "ArrowDown":
+                break;
+              case "ArrowLeft":
+                if(cursor > 0) {
+                  cursor -= 1;
+                  term.write(data.key);
+                }
+                break;
+              case "Backspace":
+                if(cursor > 0) {
+                  cursor -= 1;
+                  term.write('\x1b[D');
+                }
+                break;
+              default:
+                if(cursor < 70) {
+                  cursor += 1;
+                  term.write(data.key);
+                }
+                break;
             }
           });
         }
