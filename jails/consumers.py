@@ -2,6 +2,7 @@ from channels.generic.websocket import WebsocketConsumer
 import json
 import libioc
 
+
 class VNCConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
