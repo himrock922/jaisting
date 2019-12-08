@@ -1,14 +1,22 @@
-# jaisting
+# jaisting(日本語)
 
-This is hosting system of jail of paravirtualization system  for FreeBSD.
+これはFreeBSDの準仮想化機構である「jail」を用いたコンテナホスティングが行えるフレームワークです。
 
 ## Requirements
 
 * FreeBSD (=> 11.2-RELEASE)
 * Python (=> 3.6)
+* ioc
 * libioc
 * yarn
 * postgresql-server
+
+## iocによるZFS Poolの構築
+
+バックグラウンドライブラリであるlibiocを利用するためにはiocというjail管理ツールを用いて、ZPOOLを構築する必要があります。
+
+詳しくは下記のURLを参考にして下さい
+[https://github.com/bsdci/libioc#configuration](https://github.com/bsdci/libioc#configuration)
 
 ## Install
 
@@ -20,7 +28,7 @@ This is hosting system of jail of paravirtualization system  for FreeBSD.
 % git clone git@github.com:himrock922/jaisting.git
 ```
 
-## PostgreSQL
+## PostgreSQL Setting
 
 ```bash
 % vim /etc/rc.conf
@@ -34,7 +42,7 @@ psql=# grant all privileges on database <dbname> to <username>;
 % python3.7 manage.py migrate
 ```
 
-### Admin User
+### Admin User Create
 
 ```bash
 python3.7 manage.py createsuperuser
@@ -60,7 +68,7 @@ Please change line of following file that your server name or ip by address.
 ## Usage
 
 ```bash
-% cd server/jaisting
+% cd jaisting
 % pip install Cython==0.29.5
 % pip install -r packages.txt
 % yarn install
@@ -84,7 +92,6 @@ natd_enable="YES"
 natd_interface="wan_interface"
 natd_flags="-f /etc/natd.conf"
 
-
 % sudo echo "net.link.ether.ipfw=1" >> /etc/sysctl.conf
 % sudo echo "net.link.bridge.ipfw=1" >> /etc/sysctl.conf
 % sudo echo "security.jail.allow_raw_sockets=1" >> /etc/sysctl.conf
@@ -106,7 +113,7 @@ To intercommunication with host and jail, it is need create brdige interface.
 % sudo vim /etc/rc.conf
 cloned_interfaces="bridge0"
 ifconfig_bridge0="inet {bridge_ip_address} netmask {subnet}"
-ifconfig_brdige0="addm wan_interface"
+ifconfig_brdige0="addm {wan_interface}"
 ```
 
 ipfw sample config

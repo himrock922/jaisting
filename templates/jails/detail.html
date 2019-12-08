@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for k, v in jail.items %}
+        {% for k, v in jail.config.items %}
           <tr>
             <td>{{ k }}</td>
             <td>{{ v }}</td>
@@ -22,6 +22,9 @@
         {% endfor %}
         </tbody>
       </table>
+      {% if jail.running == True %}
+        <div class="float-md-right"><a class="btn btn-success new" href="/jails/{{jail.name}}/connect">Connect</a></div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
