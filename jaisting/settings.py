@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['1.2.3.4']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -141,3 +142,4 @@ WEBPACK_LOADER = {
 LOGIN_REDIRECT_URL = '/jails'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 AUTH_USER_MODEL = 'users.User'
+ASGI_APPLICATION = "jaisting.routing.application"

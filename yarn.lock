@@ -3525,6 +3525,11 @@ xtend@^4.0.0, xtend@~4.0.1:
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
 
+xterm-addon-attach@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-attach/-/xterm-addon-attach-0.4.0.tgz#afe67a89cab370c5d454198c9a98e0943c672888"
+  integrity sha512-va1dagNs9ao1aj06cRCbyTXe4POBhOa0y7Qc6q9Z2Z9bgHt9zCANeP5tKM8d0SMKSPmRnxfQ2F4P11iwB/Tzsw==
+
 xterm@4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/xterm/-/xterm-4.3.0.tgz#9a302efefe75172d4f7ea3afc20f9bd983f05027"
