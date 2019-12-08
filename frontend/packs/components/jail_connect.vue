@@ -11,7 +11,7 @@
     axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
     const term = new Terminal();
-    const socket = new WebSocket("ws://133.242.137.151:8080/" + window.location.pathname.slice(0, -8) + "/websocket");
+    const socket = new WebSocket("ws://localhost" + window.location.pathname.slice(0, -8) + "/websocket");
     const attachAddon = new AttachAddon(socket);
     socket.addEventListener( "message", (response) => {
       term.write("$ " + response.data + "\r\n");
@@ -22,10 +22,10 @@
         name: 'Jails-Connect',
         mounted: function () {
           let current_line = "";
+          let cursor = 0;
           const jail_name = document.getElementById("jail_name").value;
           term.open(document.getElementById('terminal'));
           term.write("$ ");
-          let cursor = 0;
           term.onKey((data) => {
             switch(data.domEvent.key) {
               case "Enter":
