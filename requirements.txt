@@ -6,7 +6,6 @@ autopep8==1.4.3
 bcrypt==3.1.7
 cffi==1.13.2
 channels==2.3.1
-chromedriver-binary==78.0.3904.11.0
 constantly==15.1.0
 cryptography==2.8
 daphne==2.4.0
