@@ -15,5 +15,5 @@ class VNCConsumer(WebsocketConsumer):
             jail = libioc.Jail(data_json["jail_name"])
             response = jail.exec(data_json["message"].split(" "))
         except (libioc.errors.JailNotFound):
-          raise Http404('%s does not found' % data_json["jail_name"])
+            self.send(text_data='%s not found' % data_json["jail_name"])
         self.send(text_data=response[0])
