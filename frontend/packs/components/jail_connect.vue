@@ -10,17 +10,16 @@
     axios.defaults.xsrfCookieName = 'csrftoken';
     axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-    const term = new Terminal();
-    const socket = new WebSocket("ws://localhost" + window.location.pathname.slice(0, -8) + "/websocket");
-    const attachAddon = new AttachAddon(socket);
-    socket.addEventListener( "message", (response) => {
-      term.write("$ " + response.data + "\r\n");
-      term.write("$ ");
-    });
-
     export default {
         name: 'Jails-Connect',
         mounted: function () {
+          const term = new Terminal();
+          const socket = new WebSocket("ws://localhost/jails/websocket");
+          const attachAddon = new AttachAddon(socket);
+          socket.addEventListener( "message", (response) => {
+            term.write("$ " + response.data + "\r\n");
+            term.write("$ ");
+          });
           let current_line = "";
           let cursor = 0;
           const jail_name = document.getElementById("jail_name").value;
