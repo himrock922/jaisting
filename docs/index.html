@@ -78,7 +78,7 @@
           <hr class="divider light my-4">
           <p class="text-white-50 mb-4">JaistingはFreeBSD OSおける準仮想化機構である「jail」コンテナをブラウザの操作で取り扱うことができるOSSのフレームワークです。
           </p>
-          <p class="text-white-50 mb-4">jailコンテナ上で様々な本番環境を構築・デプロイできるようにダッシュボード経由でネットワーク・ファイアーウォール・コンソール等の機能を提供しています。
+          <p class="text-white-50 mb-4">jailコンテナ上で様々な本番環境を構築・デプロイできるようにダッシュボード経由でネットワーク・ファイアウォール・コンソール等の機能を提供しています。
         　</p>
       　　<p class="text-white-50 mb-4">ダッシュボードで行える機能は現在も絶賛開発中です。パブリックリリースしたWebサイトもありますので、是非Jaistingによるコンテナ生活をお楽しみ下さい。
         　</p>
@@ -96,30 +96,32 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Sturdy Themes</h3>
-            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+            <i class="fas fa-4x fa-server text-primary mb-4"></i>
+            <h3 class="h4 mb-2">Jailコンテナの管理</h3>
+            <p class="text-muted mb-0">Webブラウザによる操作でJailコンテナの作成・起動・削除ができます。</p>
+            <p class="text-muted mb-0">また、Jailを構築するために必要なFreeBSD OSのソースもブラウザの操作でインストールできます。</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Up to Date</h3>
-            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+            <i class="fas fa-4x fa-network-wired text-primary mb-4"></i>
+            <h3 class="h4 mb-2">ネットワークの設定</h3>
+            <p class="text-muted mb-0">FreeBSDホストとJailコンテナをブリッジ接続することにより、Jailコンテナに自由なネットワークを設定することができます。</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Ready to Publish</h3>
-            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+            <i class="fas fa-4x fa-ethernet text-primary mb-4"></i>
+            <h3 class="h4 mb-2">ファイアウォールの設定</h3>
+            <p class="text-muted mb-0">ブラウザ上でFreeBSDホストのファイアウォールの設定を行うことができます。</p>
+            <p class="text-muted mb-0">これにより、Jailネットワークへの通信はNAT/NAPT変換により対外接続をすることができます。</p>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 text-center">
           <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Made with Love</h3>
-            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+            <i class="fas fa-4x fa-terminal text-primary mb-4"></i>
+            <h3 class="h4 mb-2">ブラウザターミナルによるJailコンテナの操作</h3>
+            <p class="text-muted mb-0">ブラウザ上で実装した疑似ターミナル経由でJailコンテナへUNIXコマンドの実行ができます。</p>
           </div>
         </div>
       </div>
@@ -131,82 +133,60 @@
     <div class="container-fluid p-0">
       <div class="row no-gutters">
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/1.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
+          <a class="portfolio-box" href="img/jails_index.png">
+            <img class="img-fluid" src="img/jails_index.png" alt="">
             <div class="portfolio-box-caption">
               <div class="project-category text-white-50">
-                Category
+                Jails
               </div>
               <div class="project-name">
-                Project Name
+                Jailコンテナ一覧ページ
               </div>
             </div>
           </a>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/2.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
+          <a class="portfolio-box" href="img/networks.png">
+            <img class="img-fluid" src="img/networks.png" alt="">
             <div class="portfolio-box-caption">
               <div class="project-category text-white-50">
-                Category
+                NetWorks
               </div>
               <div class="project-name">
-                Project Name
+                Jailで利用するネットワークを設定できます
               </div>
             </div>
           </a>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/3.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
+          <a class="portfolio-box" href="img/firewall.png">
+            <img class="img-fluid" src="img/firewall.png" alt="">
             <div class="portfolio-box-caption">
               <div class="project-category text-white-50">
-                Category
+                FireWall
               </div>
               <div class="project-name">
-                Project Name
+                FreeBSDホストのファイアウォールを設定できます
               </div>
             </div>
           </a>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/4.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
+          <a class="portfolio-box" href="img/xterm.png">
+            <img class="img-fluid" src="img/xterm.png" alt="">
             <div class="portfolio-box-caption">
               <div class="project-category text-white-50">
-                Category
+                Console
               </div>
               <div class="project-name">
-                Project Name
+                ブラウザ上のコンソール経由でJailコンテナでUNIXコマンドが実行できます。
               </div>
             </div>
           </a>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/5.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/5.jpg" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
         </div>
         <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="img/portfolio/fullsize/6.jpg">
-            <img class="img-fluid" src="img/portfolio/thumbnails/6.jpg" alt="">
-            <div class="portfolio-box-caption p-3">
-              <div class="project-category text-white-50">
-                Category
-              </div>
-              <div class="project-name">
-                Project Name
-              </div>
-            </div>
-          </a>
         </div>
       </div>
     </div>
