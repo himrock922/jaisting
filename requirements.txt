@@ -9,7 +9,7 @@ channels==2.3.1
 constantly==15.1.0
 cryptography==2.8
 daphne==2.4.0
-Django==2.1.4
+Django==2.2.13
 django-environ==0.4.5
 django-webpack-loader==0.6.0
 entrypoints==0.3
